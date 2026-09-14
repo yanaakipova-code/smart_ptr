@@ -48,3 +48,47 @@ public:
 
 };
 
+template <typename T>
+class unic_ptr_arr{
+private:
+    T* ptr;
+public:
+    unic_ptr_arr(T* p = nullptr): ptr(p){}
+    ~unic_ptr_arr(){ delete[] ptr; }
+
+    unic_ptr_arr( const unic_ptr_arr& other ) = delete;
+    unic_ptr_arr( unic_ptr_arr&& other ): ptr(other.ptr){
+        other.ptr = nullptr;
+    }
+    unic_ptr_arr& operator=( const unic_ptr_arr&) = delete;
+
+    unic_ptr_arr& operator=( unic_ptr_arr&& other){
+        if(this != &other){
+            delete[] ptr;
+            ptr = other.ptr;
+            other.ptr = nullptr;
+        }
+        return *this;
+    }
+
+    T& operator[]( std::size_t index ) const{
+        return ptr[index];
+    }
+
+    T* get() const{
+        return ptr;
+    }
+
+    T* release() {
+        T* temp = ptr;
+        ptr = nullptr;
+        return temp;
+    }
+
+    void reset(T* p = nullptr){
+        if(ptr != p){
+            delete[] ptr;
+            ptr = p;
+        }
+    }
+};
