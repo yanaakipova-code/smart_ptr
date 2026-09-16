@@ -1,3 +1,5 @@
+#include <cstddef>
+
 template<typename T>
 class share_ptr{
 private:
@@ -20,7 +22,9 @@ public:
     }
 
     share_ptr(const share_ptr& other): ptr(other.ptr), ref_count(other.ref_count){
-        ++(*ref_count);
+        if(ref_count){
+            ++(*ref_count);
+        }
     }
 
     share_ptr(share_ptr&& other): ptr(other.ptr), ref_count(other.ref_count){
@@ -36,7 +40,9 @@ public:
             }
             ptr = other.ptr;
             ref_count = other.ref_count;
-            ++(*ref_count);
+            if (ref_count){
+                ++(*ref_count);
+            }
         }
         return *this;
     }
@@ -105,7 +111,9 @@ public:
     }
 
     share_ptr_arr(const share_ptr_arr& other): ptr(other.ptr), ref_count(other.ref_count){
-        ++(*ref_count);
+        if(ref_count){
+            ++(*ref_count);
+        }
     }
 
     share_ptr_arr(share_ptr_arr&& other): ptr(other.ptr), ref_count(other.ref_count){
@@ -121,7 +129,9 @@ public:
             }
             ptr = other.ptr;
             ref_count = other.ref_count;
-            ++(*ref_count);
+            if (ref_count){
+                ++(*ref_count);
+            }
         }
         return *this;
     }
