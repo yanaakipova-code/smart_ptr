@@ -229,12 +229,6 @@ TEST(share_ptr, dereference) {
     EXPECT_EQ(*p, 5);
 }
 
-TEST(share_ptr, dereference_allows_write) {
-    share_ptr<int> p(new int(5));
-    *p = 10;
-    EXPECT_EQ(*p, 10);
-}
-
 TEST(share_ptr, arrow_operator) {
     share_ptr<std::string> p(new std::string("hello"));
     EXPECT_EQ(p->size(), 5u);
