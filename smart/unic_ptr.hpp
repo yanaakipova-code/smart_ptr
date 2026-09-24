@@ -48,7 +48,6 @@ public:
            ptr = p;
         }
     }
-
 };
 
 template<typename T>
@@ -56,16 +55,16 @@ class unique_ptr<T[]>{
 private:
     T* ptr;
 public:
-    unique_ptr<T[]>(T* p = nullptr): ptr(p){}
-    ~unique_ptr<T[]>(){ delete[] ptr; }
+    unique_ptr(T* p = nullptr): ptr(p){}
+    ~unique_ptr(){ delete[] ptr; }
 
-    unique_ptr<T[]>( const unique_ptr<T[]>& other ) = delete;
-    unique_ptr<T[]>( unique_ptr<T[]>&& other ): ptr(other.ptr){
+    unique_ptr( const unique_ptr& other ) = delete;
+    unique_ptr( unique_ptr&& other ): ptr(other.ptr){
         other.ptr = nullptr;
     }
-    unique_ptr<T[]>& operator=( const unique_ptr<T[]>&) = delete;
+    unique_ptr& operator=( const unique_ptr&) = delete;
 
-    unique_ptr<T[]>& operator=( unique_ptr<T[]>&& other){
+    unique_ptr& operator=( unique_ptr&& other){
         if(this != &other){
             delete[] ptr;
             ptr = other.ptr;
